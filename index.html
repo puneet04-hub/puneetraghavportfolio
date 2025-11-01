@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puneet Raghav | UI/UX Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #0a0a0d;
+      --card: rgba(255, 255, 255, 0.04);
+      --card-hover: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+      --text: #f4f4f5;
+      --subtext: #a1a1aa;
+      --font: "Poppins", sans-serif;
+      --gradient: linear-gradient(135deg, var(--accent), var(--accent2));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font);
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 80%, #11121a 0%, var(--bg) 70%);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 10, 13, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 0.8rem 4rem;
+      background: rgba(10, 10, 13, 0.9);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav a {
+      color: var(--subtext);
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--accent);
+    }
+
+    nav a:hover::after, nav a.active::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    #home::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15), transparent 70%);
+      z-index: -1;
+      animation: pulse 8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.7; }
+    }
+
+    .hero-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid transparent;
+      background: var(--gradient);
+      padding: 4px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+      transition: transform 0.5s ease;
+    }
+
+    .hero-img:hover {
+      transform: scale(1.05) rotate(5deg);
+    }
+
+    #home h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #home p {
+      color: var(--subtext);
+      max-width: 680px;
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.9rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.6s;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 7rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 80px;
+      height: 3px;
+      background: var(--gradient);
+      display: block;
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* About */
+    #about p {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--subtext);
+      font-size: 1.05rem;
+    }
+
+    /* Skills */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.2rem;
+      max-width: 800px;
+      margin: 2rem auto 0;
+    }
+
+    .skill {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.2rem;
+      border-radius: 14px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      color: var(--text);
+    }
+
+    .skill:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      background: var(--card-hover);
+      color: var(--accent);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15);
+    }
+
+    /* Projects */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .project:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .project:hover .project-img {
+      transform: scale(1.08);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project h3 {
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      font-size: 1.2rem;
+    }
+
+    .project p {
+      color: var(--subtext);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .project a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    .project a:hover {
+      color: var(--accent2);
+    }
+
+    /* Contact */
+    #contact {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.03);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 5rem 2rem;
+    }
+
+    .contact-info {
+      margin: 2rem 0;
+      font-size: 1.1rem;
+    }
+
+    .contact-info a {
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    .social-links {
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      margin: 0 1rem;
+      color: var(--text);
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--subtext);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(10, 10, 13, 0.5);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { padding: 1rem 2rem; }
+      header.scrolled { padding: 0.8rem 2rem; }
+      section { padding: 6rem 2rem 3rem; }
+      #home h2 { font-size: 2.4rem; }
+      .btn-group { flex-direction: column; align-items: center; }
+      .btn { width: 80%; max-width: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Puneet Raghav</h1>
+    <nav>
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="home">
+    <img src="my.jpg" alt="Puneet Raghav" class="hero-img">
+    <h2>Hello, I’m <span>Puneet Raghav</span></h2>
+    <p>UI/UX Designer crafting digital experiences where elegance meets purpose. I create designs that tell stories and build emotion through simplicity and clarity.</p>
+    <div class="btn-group">
+      <a href="mailto:thakurpuneetraghav16082004@gmail.com" class="btn btn-primary">Hire Me</a>
+      <a href="https://wa.me/917417435339" target="_blank" class="btn btn-secondary">WhatsApp</a>
+      <a href="resume.pdf" download class="btn btn-secondary">Download CV</a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <p>I’m a multidisciplinary designer passionate about creating interfaces that feel intuitive and alive. My work blends strategy, design, and storytelling to shape experiences users remember.</p>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="skill-grid">
+      <div class="skill">Figma</div>
+      <div class="skill">Adobe XD</div>
+      <div class="skill">Wireframing</div>
+      <div class="skill">Prototyping</div>
+      <div class="skill">User Research</div>
+      <div class="skill">UI Animation</div>
+      <div class="skill">Responsive Design</div>
+      <div class="skill">HTML/CSS</div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="project-grid">
+      <div class="project">
+        <img src="mtba.png" alt="Movie Ticket Booking App" class="project-img">
+        <div class="project-content">
+          <h3>Movie Ticket Booking App</h3>
+          <p>A clean, futuristic booking app designed to deliver a seamless user experience with clarity and flow.</p>
+          <a href="https://www.figma.com/design/6PVX8vGJTkporzVRP5pLEn/Movie-Ticket-Booking-App" target="_blank">
+            View on Figma <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="project">
+        <img src="spacetech.png" alt="SpaceTech UI Design" class="project-img">
+        <div class="project-content">
+          <h3>SpaceTech Website</h3>
+          <p>Elegant web layout built for a fictional tech brand — merging science, simplicity, and storytelling.</p>
+          <a href="https://www.figma.com/design/NLgVkNsO8fE40IxjhnAHoM/SpaceTech-Website-Design" target="_blank">
+            View on Figma <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="project">
+        <img src="Flixs.png" alt="Flixs UI Design" class="project-img">
+        <div class="project-content">
+          <h3>Flixs Community Platform</h3>
+          <p>Designed an interactive and visually engaging community platform focused on collaboration and connection.</p>
+          <a href="https://www.figma.com/design/TDCdy1HMqV8aOo6FCxaFVL/Flixs" target="_blank">
+            View on Figma <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-info">
+      📧 <a href="mailto:thakurpuneetraghav16082004@gmail.com">thakurpuneetraghav16082004@gmail.com</a><br><br>
+      📞 <a href="tel:+917417435339">+91 74174 35339</a>
+    </div>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/puneetraghav" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://www.instagram.com/puneetraghav.ai" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://github.com/puneet04-hub" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Puneet Raghav · Designed with <i class="fas fa-heart" style="color: #e11d48;"></i> in Figma & Code
+  </footer>
+
+  <script>
+    // Active Nav Link
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Header Shrink on Scroll
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>
