@@ -19,11 +19,10 @@
       --gradient: linear-gradient(135deg, var(--accent), var(--accent2));
     }
 
-    * {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: var(--font);
     }
 
     body {
@@ -31,14 +30,12 @@
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.7;
+      font-family: var(--font);
     }
 
-    /* Smooth Scroll */
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
-    /* Header */
+    /* ==================== HEADER ==================== */
     header {
       position: fixed;
       top: 0;
@@ -49,15 +46,11 @@
       padding: 1.2rem 4rem;
       backdrop-filter: blur(12px);
       background: rgba(10, 10, 13, 0.75);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
       z-index: 1000;
-      transition: all 0.3s ease;
+      transition: padding .3s ease, background .3s ease;
     }
-
-    header.scrolled {
-      padding: 0.8rem 4rem;
-      background: rgba(10, 10, 13, 0.9);
-    }
+    header.scrolled { padding: .8rem 4rem; background: rgba(10,10,13,.9); }
 
     header h1 {
       font-size: 1.5rem;
@@ -67,35 +60,32 @@
       -webkit-text-fill-color: transparent;
     }
 
+    /* Mobile menu toggle */
+    .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; color: var(--text); }
+
+    nav {
+      display: flex;
+      gap: 1.2rem;
+    }
     nav a {
       color: var(--subtext);
       text-decoration: none;
-      margin: 0 1.2rem;
       font-weight: 500;
       position: relative;
-      transition: color 0.3s ease;
+      transition: color .3s;
     }
-
     nav a::after {
       content: '';
       position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -6px;
-      left: 0;
+      width: 0; height: 2px;
+      bottom: -6px; left: 0;
       background: var(--gradient);
-      transition: width 0.3s ease;
+      transition: width .3s;
     }
+    nav a:hover, nav a.active { color: var(--accent); }
+    nav a:hover::after, nav a.active::after { width: 100%; }
 
-    nav a:hover, nav a.active {
-      color: var(--accent);
-    }
-
-    nav a:hover::after, nav a.active::after {
-      width: 100%;
-    }
-
-    /* Hero Section */
+    /* ==================== HERO ==================== */
     #home {
       min-height: 100vh;
       display: flex;
@@ -106,109 +96,65 @@
       padding: 0 2rem;
       position: relative;
     }
-
     #home::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15), transparent 70%);
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.15), transparent 70%);
       z-index: -1;
       animation: pulse 8s infinite;
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.7; }
-    }
+    @keyframes pulse { 0%,100% {opacity:.4} 50% {opacity:.7} }
 
     .hero-img {
-      width: 180px;
-      height: 180px;
+      width: 180px; height: 180px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid transparent;
       background: var(--gradient);
       padding: 4px;
       margin-bottom: 1.5rem;
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
-      transition: transform 0.5s ease;
+      box-shadow: 0 0 40px rgba(99,102,241,.3);
+      transition: transform .5s;
     }
-
-    .hero-img:hover {
-      transform: scale(1.05) rotate(5deg);
-    }
+    .hero-img:hover { transform: scale(1.05) rotate(5deg); }
 
     #home h2 {
       font-size: 3rem;
       font-weight: 700;
-      margin-bottom: 0.8rem;
+      margin-bottom: .8rem;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    #home p { color: var(--subtext); max-width: 680px; font-size: 1.1rem; margin-bottom: 2.5rem; }
 
-    #home p {
-      color: var(--subtext);
-      max-width: 680px;
-      font-size: 1.1rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn {
-      padding: 0.9rem 2rem;
+      padding: .9rem 2rem;
       border-radius: 12px;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.4s ease;
+      transition: all .4s;
       position: relative;
       overflow: hidden;
       z-index: 1;
     }
-
-    .btn-primary {
-      background: var(--gradient);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-    }
-
+    .btn-primary { background: var(--gradient); color: #fff; }
+    .btn-secondary { background: transparent; color: var(--text); border: 1.5px solid rgba(255,255,255,.15); }
     .btn::before {
       content: '';
       position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: 0.6s;
-      z-index: -1;
+      top:0; left:-100%;
+      width:100%; height:100%;
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+      transition:.6s; z-index:-1;
     }
+    .btn:hover::before { left:100%; }
+    .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(139,92,246,.3); }
 
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
-    }
-
-    /* Section Styling */
-    section {
-      padding: 7rem 4rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
+    /* ==================== SECTIONS ==================== */
+    section { padding: 7rem 4rem 4rem; max-width: 1200px; margin: 0 auto; }
     .section-title {
       font-size: 2.4rem;
       text-align: center;
@@ -218,11 +164,9 @@
       -webkit-text-fill-color: transparent;
       position: relative;
     }
-
     .section-title::after {
       content: '';
-      width: 80px;
-      height: 3px;
+      width: 80px; height: 3px;
       background: var(--gradient);
       display: block;
       margin: 1rem auto 0;
@@ -230,157 +174,159 @@
     }
 
     /* About */
-    #about p {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      color: var(--subtext);
-      font-size: 1.05rem;
-    }
+    #about p { max-width: 800px; margin: 0 auto; text-align: center; color: var(--subtext); font-size: 1.05rem; }
 
     /* Skills */
     .skill-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
       gap: 1.2rem;
       max-width: 800px;
       margin: 2rem auto 0;
     }
-
     .skill {
       background: var(--card);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255,255,255,.08);
       padding: 1.2rem;
       border-radius: 14px;
       text-align: center;
       backdrop-filter: blur(10px);
-      transition: all 0.4s ease;
-      color: var(--text);
+      transition: all .4s;
     }
-
     .skill:hover {
       transform: translateY(-8px);
       border-color: var(--accent);
       background: var(--card-hover);
       color: var(--accent);
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15);
+      box-shadow: 0 10px 25px rgba(99,102,241,.15);
     }
 
     /* Projects */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
       gap: 2rem;
     }
-
     .project {
       background: var(--card);
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.4s ease;
+      border: 1px solid rgba(255,255,255,.08);
+      transition: all .4s;
       position: relative;
     }
-
     .project:hover {
       transform: translateY(-10px);
       border-color: var(--accent);
-      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+      box-shadow: 0 20px 40px rgba(99,102,241,.2);
     }
-
     .project-img {
-      width: 100%;
-      height: 180px;
+      width: 100%; height: 180px;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform .5s;
     }
-
-    .project:hover .project-img {
-      transform: scale(1.08);
-    }
-
-    .project-content {
-      padding: 1.5rem;
-    }
-
-    .project h3 {
-      color: var(--accent);
-      margin-bottom: 0.6rem;
-      font-size: 1.2rem;
-    }
-
-    .project p {
-      color: var(--subtext);
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-    }
-
+    .project:hover .project-img { transform: scale(1.08); }
+    .project-content { padding: 1.5rem; }
+    .project h3 { color: var(--accent); margin-bottom: .6rem; font-size: 1.2rem; }
+    .project p { color: var(--subtext); font-size: .95rem; margin-bottom: 1rem; }
     .project a {
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      transition: color 0.3s;
+      gap: .5rem;
+      transition: color .3s;
     }
-
-    .project a:hover {
-      color: var(--accent2);
-    }
+    .project a:hover { color: var(--accent2); }
 
     /* Contact */
     #contact {
       text-align: center;
-      background: rgba(255, 255, 255, 0.03);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,.03);
+      border-top: 1px solid rgba(255,255,255,.06);
       padding: 5rem 2rem;
     }
-
-    .contact-info {
-      margin: 2rem 0;
-      font-size: 1.1rem;
-    }
-
-    .contact-info a {
-      color: var(--accent);
-      text-decoration: none;
-      margin: 0 0.5rem;
-    }
-
-    .social-links {
-      margin-top: 1.5rem;
-    }
-
+    .contact-info { margin: 2rem 0; font-size: 1.1rem; }
+    .contact-info a { color: var(--accent); text-decoration: none; margin: 0 .5rem; }
+    .social-links { margin-top: 1.5rem; }
     .social-links a {
       margin: 0 1rem;
       color: var(--text);
       font-size: 1.1rem;
-      transition: color 0.3s;
+      transition: color .3s;
     }
-
-    .social-links a:hover {
-      color: var(--accent);
-    }
+    .social-links a:hover { color: var(--accent); }
 
     /* Footer */
     footer {
       text-align: center;
       padding: 2rem;
       color: var(--subtext);
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(10, 10, 13, 0.5);
+      font-size: .9rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: rgba(10,10,13,.5);
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
+    /* ==================== MOBILE RESPONSIVE ==================== */
+    @media (max-width: 992px) {
       header { padding: 1rem 2rem; }
-      header.scrolled { padding: 0.8rem 2rem; }
+      header.scrolled { padding: .8rem 2rem; }
       section { padding: 6rem 2rem 3rem; }
-      #home h2 { font-size: 2.4rem; }
+      #home h2 { font-size: 2.6rem; }
+    }
+
+    @media (max-width: 768px) {
+      /* Header - hamburger */
+      .menu-toggle { display: block; }
+      nav {
+        position: fixed;
+        top: 100%; left: 0;
+        width: 100%;
+        background: rgba(10,10,13,.95);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        transform: translateY(-150%);
+        transition: transform .4s ease;
+      }
+      nav.open { transform: translateY(0); }
+      nav a { margin: .6rem 0; font-size: 1.1rem; }
+
+      #home h2 { font-size: 2.2rem; }
+      #home p { font-size: 1rem; }
+
       .btn-group { flex-direction: column; align-items: center; }
-      .btn { width: 80%; max-width: 300px; }
+      .btn { width: 80%; max-width: 300px; text-align: center; }
+
+      .skill-grid { grid-template-columns: repeat(2, 1fr); }
+      .project-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      header { padding: .8rem 1.5rem; }
+      header h1 { font-size: 1.3rem; }
+
+      #home { padding: 0 1rem; }
+      .hero-img { width: 140px; height: 140px; }
+
+      #home h2 { font-size: 1.9rem; }
+      #home p { font-size: .95rem; }
+
+      .section-title { font-size: 2rem; }
+      .section-title::after { width: 60px; }
+
+      .skill-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .skill { padding: 1rem; }
+
+      .project-img { height: 160px; }
+      .project-content { padding: 1.2rem; }
+      .project h3 { font-size: 1.1rem; }
+      .project p { font-size: .9rem; }
+
+      .contact-info { font-size: 1rem; }
+      .social-links a { margin: 0 .6rem; font-size: 1rem; }
     }
   </style>
 </head>
@@ -388,7 +334,10 @@
 
   <header>
     <h1>Puneet Raghav</h1>
-    <nav>
+    <div class="menu-toggle" id="menuToggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav id="navMenu">
       <a href="#home" class="active">Home</a>
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
@@ -412,11 +361,11 @@
   <!-- About -->
   <section id="about">
     <h2 class="section-title">About Me</h2>
-    <p>Hi, I’m Puneet Raghav, a passionate UI/UX Designer and Computer Science student specializing in AI & Machine Learning. I love creating digital experiences that are not only visually appealing but also meaningful and user-centered. <br> <br>
+    <p>Hi, I’m Puneet Raghav, a passionate UI/UX Designer and Computer Science student specializing in AI & Machine Learning. I love creating digital experiences that are not only visually appealing but also meaningful and user-centered. <br><br>
 
-My journey began with a deep curiosity for how people interact with technology — and that curiosity drives me to design interfaces that solve real problems with clarity and creativity. I focus on research-driven design, clean aesthetics, and smooth user flows, using tools like Figma, Adobe XD, and Canva to bring ideas to life. <br> <br>
+My journey began with a deep curiosity for how people interact with technology — and that curiosity drives me to design interfaces that solve real problems with clarity and creativity. I focus on research-driven design, clean aesthetics, and smooth user flows, using tools like Figma, Adobe XD, and Canva to bring ideas to life. <br><br>
 
-Beyond design, I’m also exploring the intersection of design, technology, and innovation — building projects that merge AI and UX to shape smarter, more intuitive experiences. <br> <br>
+Beyond design, I’m also exploring the intersection of design, technology, and innovation — building projects that merge AI and UX to shape smarter, more intuitive experiences. <br><br>
 
 I’m constantly learning, experimenting, and pushing boundaries to grow as a designer who not only builds interfaces but also crafts impactful digital stories.</p>
   </section>
@@ -479,8 +428,8 @@ I’m constantly learning, experimenting, and pushing boundaries to grow as a de
   <section id="contact">
     <h2 class="section-title">Get in Touch</h2>
     <div class="contact-info">
-      📧 <a href="mailto:thakurpuneetraghav16082004@gmail.com">thakurpuneetraghav16082004@gmail.com</a><br><br>
-      📞 <a href="tel:+917417435339">+91 74174 35339</a>
+      <span>📧</span> <a href="mailto:thakurpuneetraghav16082004@gmail.com">thakurpuneetraghav16082004@gmail.com</a><br><br>
+      <span>📞</span> <a href="tel:+917417435339">+91 74174 35339</a>
     </div>
     <div class="social-links">
       <a href="https://www.linkedin.com/in/puneetraghav" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
@@ -490,39 +439,38 @@ I’m constantly learning, experimenting, and pushing boundaries to grow as a de
   </section>
 
   <footer>
-    © 2025 Puneet Raghav · Designed with <i class="fas fa-heart" style="color: #e11d48;"></i> in Figma & Code
+    © 2025 Puneet Raghav · Designed with <i class="fas fa-heart" style="color:#e11d48;"></i> in Figma & Code
   </footer>
 
   <script>
-    // Active Nav Link
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+      const icon = menuToggle.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    // Active Nav Link on scroll
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('section');
-
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        if (scrollY >= sectionTop) {
-          current = section.getAttribute('id');
-        }
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 120;
+        if (scrollY >= top) current = sec.getAttribute('id');
       });
-
       navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-          link.classList.add('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href').slice(1) === current);
       });
     });
 
-    // Header Shrink on Scroll
+    // Header shrink
     const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+      header.classList.toggle('scrolled', window.scrollY > 50);
     });
   </script>
 </body>
