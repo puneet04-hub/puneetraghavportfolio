@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Puneet Raghav — UI/UX Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,9 +18,11 @@
       --border-light: #e5e7eb;
       --btn-dark: #18181b;
       --btn-dark-hover: #27272a;
-      --radius-card: 20px;
+      --radius-card: 22px;
       --radius-pill: 12px;
       --max-width: 960px;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     * {
@@ -35,11 +37,14 @@
       color: var(--text-primary);
       background-color: var(--bg-primary);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     body {
       line-height: 1.6;
       background-color: var(--bg-primary);
+      overflow-x: hidden;
+      width: 100%;
     }
 
     a {
@@ -47,23 +52,42 @@
       text-decoration: none;
     }
 
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, #18181b, #b45309);
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+
     /* Navigation Bar */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.3s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
     }
 
     .nav-container {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 18px 24px;
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
     }
 
     .brand {
@@ -73,12 +97,17 @@
       font-weight: 700;
       font-size: 16px;
       letter-spacing: -0.01em;
+      transition: transform 0.25s var(--ease-spring);
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
     }
 
     .brand-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
       background: #18181b;
       color: #ffffff;
       display: inline-flex;
@@ -86,6 +115,12 @@
       justify-content: center;
       font-size: 13px;
       font-weight: 700;
+      transition: transform 0.35s var(--ease-spring), background-color 0.25s ease;
+    }
+
+    .brand:hover .brand-avatar {
+      transform: rotate(-6deg) scale(1.06);
+      background: var(--accent-label);
     }
 
     nav ul {
@@ -99,11 +134,56 @@
       font-size: 14px;
       font-weight: 500;
       color: var(--text-secondary);
-      transition: color 0.2s ease;
+      position: relative;
+      padding: 4px 0;
+      transition: color 0.25s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s var(--ease-out-expo);
     }
 
     nav a:hover {
       color: var(--text-primary);
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Mobile Hamburger Button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .menu-toggle:hover {
+      background-color: var(--bg-surface);
+    }
+
+    .menu-toggle svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
     }
 
     /* Hero Section */
@@ -116,16 +196,37 @@
     .hero-card {
       background-color: var(--bg-surface);
       border-radius: 28px;
-      padding: 96px 24px 72px;
+      padding: 96px 28px 72px;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      transition: box-shadow 0.4s ease;
+    }
+
+    .hero-card:hover {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Subtle ambient floating glow */
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 520px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(180, 83, 9, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
     }
 
     .hero-title {
-      font-size: clamp(2.4rem, 5vw, 3.75rem);
+      font-size: clamp(2.15rem, 5vw, 3.75rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.15;
@@ -135,6 +236,7 @@
       flex-wrap: wrap;
       gap: 14px;
       margin-bottom: 24px;
+      animation: heroFadeUp 0.8s var(--ease-out-expo) both;
     }
 
     .inline-badge {
@@ -143,38 +245,82 @@
       justify-content: center;
       width: 58px;
       height: 58px;
-      border-radius: 14px;
+      border-radius: 15px;
       background: linear-gradient(135deg, #27272a, #18181b);
       color: #fff;
       font-size: 22px;
       font-weight: 700;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      transform: rotate(-3deg);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+      transform: rotate(-4deg);
+      transition: transform 0.4s var(--ease-spring), box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .inline-badge:hover {
+      transform: rotate(6deg) scale(1.1);
+      box-shadow: 0 14px 30px rgba(180, 83, 9, 0.25);
     }
 
     .hero-subtitle {
       max-width: 580px;
-      font-size: 17px;
+      font-size: clamp(15px, 2vw, 17px);
       line-height: 1.65;
       color: var(--text-secondary);
       font-weight: 400;
       margin-bottom: 44px;
+      animation: heroFadeUp 0.8s var(--ease-out-expo) 0.12s both;
     }
 
     .scroll-down {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       color: var(--text-primary);
-      font-size: 20px;
-      transition: transform 0.25s ease;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      animation: heroFadeUp 0.8s var(--ease-out-expo) 0.24s both, floatArrow 2.6s ease-in-out infinite 1s;
+      transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s var(--ease-spring);
     }
 
     .scroll-down:hover {
-      transform: translateY(4px);
+      background-color: var(--btn-dark);
+      color: #ffffff;
+      border-color: var(--btn-dark);
+      animation-play-state: paused;
+      transform: translateY(4px) scale(1.06);
+    }
+
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatArrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* Scroll Reveal Utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.75s var(--ease-out-expo), transform 0.75s var(--ease-out-expo);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Main Content Container */
@@ -186,7 +332,7 @@
 
     .section-heading {
       text-align: center;
-      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-size: clamp(1.75rem, 3.2vw, 2.25rem);
       font-weight: 700;
       letter-spacing: -0.025em;
       margin-bottom: 48px;
@@ -208,12 +354,6 @@
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      transition: transform 0.25s ease;
-    }
-
-    .case-study-card:hover .case-visual {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
     }
 
     .case-visual {
@@ -226,7 +366,36 @@
       align-items: center;
       justify-content: center;
       padding: 32px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo);
+    }
+
+    .case-study-card:hover .case-visual {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Coming Soon Pill Overlay on Hover */
+    .coming-soon-pill {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(20, 20, 20, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      z-index: 5;
+      transition: transform 0.35s var(--ease-spring), background-color 0.3s ease;
+    }
+
+    .case-study-card:hover .coming-soon-pill {
+      transform: scale(1.06);
+      background: rgba(20, 20, 20, 0.92);
     }
 
     /* Custom Visual Themes for Case Studies */
@@ -242,15 +411,7 @@
       background: linear-gradient(135deg, #232f3e 0%, #131921 100%);
     }
 
-    .visual-spacetech {
-      background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
-    }
-
-    .visual-movie {
-      background: linear-gradient(135deg, #3d6b7d 0%, #284b59 100%);
-    }
-
-    /* Device Mockup Styling inside Cards */
+    /* Device Mockup Styling & Hover Micro-animations */
     .mockup-phones {
       display: flex;
       gap: 20px;
@@ -261,7 +422,7 @@
 
     .phone-frame {
       width: 165px;
-      height: 310px;
+      height: 300px;
       background: #ffffff;
       border-radius: 26px;
       border: 6px solid #18181b;
@@ -271,6 +432,7 @@
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
+      transition: transform 0.5s var(--ease-spring);
     }
 
     .phone-frame.tilted-left {
@@ -279,6 +441,14 @@
 
     .phone-frame.tilted-right {
       transform: rotate(6deg) translateY(8px);
+    }
+
+    .case-study-card:hover .phone-frame.tilted-left {
+      transform: rotate(-9deg) translateY(-4px) scale(1.03);
+    }
+
+    .case-study-card:hover .phone-frame.tilted-right {
+      transform: rotate(9deg) translateY(-4px) scale(1.03);
     }
 
     .laptop-frame {
@@ -294,6 +464,11 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    .case-study-card:hover .laptop-frame {
+      transform: scale(1.035) translateY(-3px);
     }
 
     .mock-pill {
@@ -326,19 +501,42 @@
       margin-bottom: 6px;
     }
 
+    .case-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
     .case-title {
-      font-size: 22px;
+      font-size: clamp(19px, 2.5vw, 22px);
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text-primary);
-      margin-bottom: 8px;
+      transition: color 0.25s ease;
+    }
+
+    .case-study-card:hover .case-title {
+      color: var(--accent-label);
+    }
+
+    .case-arrow {
+      font-size: 18px;
+      color: var(--text-muted);
+      transition: transform 0.3s var(--ease-spring), color 0.25s ease;
+    }
+
+    .case-study-card:hover .case-arrow {
+      transform: translate(4px, -4px);
+      color: var(--text-primary);
     }
 
     .case-desc {
       font-size: 15px;
       color: var(--text-secondary);
-      line-height: 1.55;
-      max-width: 720px;
+      line-height: 1.6;
+      max-width: 740px;
     }
 
     /* About Me Section */
@@ -349,13 +547,13 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1.45fr 1fr;
+      grid-template-columns: 1.4fr 1fr;
       gap: 48px;
       align-items: start;
     }
 
     .about-text h2 {
-      font-size: 32px;
+      font-size: clamp(26px, 3.5vw, 32px);
       font-weight: 700;
       letter-spacing: -0.025em;
       margin-bottom: 20px;
@@ -364,7 +562,7 @@
     .about-text p {
       font-size: 15.5px;
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.72;
       margin-bottom: 18px;
     }
 
@@ -379,12 +577,19 @@
       border-radius: 20px;
       padding: 24px;
       border: 1px solid var(--border-light);
+      transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo), border-color 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.05);
+      border-color: #d4d4d8;
     }
 
     .profile-card h3 {
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.08em;
       color: var(--accent-label);
       margin-bottom: 12px;
     }
@@ -402,6 +607,16 @@
       margin-top: 2px;
     }
 
+    .exp-company a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    .exp-company a:hover {
+      color: var(--accent-label);
+    }
+
     .exp-date {
       font-size: 12.5px;
       color: var(--text-muted);
@@ -415,7 +630,7 @@
       color: var(--text-secondary);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
     }
 
     .skills-tags {
@@ -429,9 +644,18 @@
       font-weight: 500;
       background: #ffffff;
       border: 1px solid var(--border-light);
-      padding: 5px 11px;
-      border-radius: 8px;
+      padding: 6px 12px;
+      border-radius: 9px;
       color: var(--text-primary);
+      cursor: default;
+      transition: transform 0.25s var(--ease-spring), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-2px);
+      background-color: var(--btn-dark);
+      color: #ffffff;
+      border-color: var(--btn-dark);
     }
 
     /* Footer / Let's Connect Section */
@@ -449,6 +673,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      transition: box-shadow 0.4s ease;
+    }
+
+    .connect-card:hover {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
     }
 
     .connect-eyebrow {
@@ -461,7 +691,7 @@
     }
 
     .connect-title {
-      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+      font-size: clamp(2.1rem, 4.5vw, 3.5rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       margin-bottom: 32px;
@@ -481,19 +711,25 @@
       color: #ffffff;
       font-size: 14px;
       font-weight: 600;
-      padding: 13px 26px;
+      padding: 13px 28px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--btn-dark);
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.2s ease;
+      transition: background-color 0.25s ease, transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
     }
 
     .btn-primary:hover {
       background-color: var(--btn-dark-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
     }
 
     .btn-secondary {
@@ -501,19 +737,25 @@
       color: var(--text-primary);
       font-size: 14px;
       font-weight: 600;
-      padding: 13px 26px;
+      padding: 13px 28px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-light);
       cursor: pointer;
-      transition: border-color 0.2s ease, transform 0.2s ease;
+      transition: border-color 0.25s ease, transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
     }
 
     .btn-secondary:hover {
-      border-color: #a3a3a3;
-      transform: translateY(-1px);
+      border-color: #18181b;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(0) scale(0.98);
     }
 
     .contact-email {
@@ -522,11 +764,15 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: color 0.2s ease;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
     }
 
     .contact-email:hover {
       color: var(--text-primary);
+      background-color: rgba(0, 0, 0, 0.04);
+      transform: translateY(-1px);
     }
 
     /* Toast Notification for Coming Soon */
@@ -537,64 +783,237 @@
       background: #18181b;
       color: #ffffff;
       padding: 14px 20px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 14px;
       font-weight: 500;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(16px) scale(0.96);
       pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-spring);
       z-index: 999;
+      max-width: calc(100vw - 48px);
     }
 
     .toast.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .nav-container {
-        padding: 14px 18px;
-      }
-      nav ul {
-        gap: 16px;
-      }
-      .hero-card {
-        padding: 64px 20px 52px;
-      }
+    /* =========================================
+       MOBILE & TABLET RESPONSIVE STYLES
+       ========================================= */
+    @media (max-width: 900px) {
       .about-grid {
         grid-template-columns: 1fr;
         gap: 32px;
       }
-      .phone-frame {
-        width: 125px;
-        height: 235px;
-        padding: 10px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 14px 18px;
       }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border-light);
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.35s var(--ease-out-expo), opacity 0.25s ease, padding 0.35s ease;
+      }
+
+      nav.open {
+        max-height: 280px;
+        opacity: 1;
+        padding: 16px 20px 22px;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.06);
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      nav a {
+        font-size: 16px;
+        display: block;
+        width: 100%;
+      }
+
+      .hero-wrapper,
+      .connect-wrapper {
+        padding: 0 16px;
+        margin-top: 16px;
+      }
+
+      .hero-card {
+        padding: 56px 20px 44px;
+        border-radius: 22px;
+      }
+
+      .inline-badge {
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+        border-radius: 12px;
+      }
+
+      .hero-subtitle {
+        margin-bottom: 32px;
+      }
+
+      main {
+        padding: 0 16px;
+      }
+
+      #case-studies {
+        padding-top: 64px;
+      }
+
+      .section-heading {
+        margin-bottom: 36px;
+      }
+
+      .case-study-list {
+        gap: 48px;
+      }
+
+      .case-visual {
+        aspect-ratio: 4 / 3;
+        padding: 20px 14px;
+        border-radius: 18px;
+      }
+
+      .coming-soon-pill {
+        top: 12px;
+        right: 12px;
+        font-size: 10.5px;
+        padding: 5px 10px;
+      }
+
+      /* Scale mockups cleanly on mobile */
       .laptop-frame {
-        width: 92%;
+        width: 96%;
+        aspect-ratio: auto;
+        min-height: 175px;
         padding: 12px;
+        border-width: 5px;
+        border-radius: 11px;
+        gap: 10px;
+      }
+
+      .laptop-grid-2col {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+
+      .irctc-search-bar {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        padding: 10px !important;
+      }
+
+      .irctc-search-btn {
+        grid-column: 1 / -1;
+        text-align: center;
+      }
+
+      .mockup-phones {
+        gap: 12px;
+      }
+
+      .phone-frame {
+        width: 132px;
+        height: 225px;
+        padding: 10px 9px;
+        border-width: 4px;
+        border-radius: 20px;
+      }
+
+      #about {
+        padding-top: 72px;
+        padding-bottom: 48px;
+      }
+
+      .connect-card {
+        padding: 56px 20px 44px;
+        border-radius: 22px;
+      }
+
+      .cta-group {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .toast {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        text-align: center;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .phone-frame {
+        width: 118px;
+        height: 205px;
+        padding: 8px 7px;
+      }
+      .hero-title {
+        gap: 10px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <!-- Top Navigation -->
-  <header>
+  <header id="siteHeader">
     <div class="nav-container">
       <a href="#home" class="brand">
         <span class="brand-avatar">PR</span>
         <span>Puneet Raghav</span>
       </a>
-      <nav>
+
+      <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <nav id="primaryNav">
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#case-studies">Case Studies</a></li>
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#" class="download-resume-trigger">Resume</a></li>
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#case-studies" class="nav-link">Case Studies</a></li>
+          <li><a href="#about" class="nav-link">About Me</a></li>
+          <li><a href="#" class="download-resume-trigger nav-link">Resume</a></li>
         </ul>
       </nav>
     </div>
@@ -619,28 +1038,29 @@
   <main>
     <!-- Case Studies Section -->
     <section id="case-studies">
-      <h2 class="section-heading">Case Studies</h2>
+      <h2 class="section-heading reveal">Case Studies</h2>
 
       <div class="case-study-list">
 
         <!-- Case Study 1: IRCTC Website -->
-        <article class="case-study-card" onclick="showComingSoon('IRCTC Website Redesign')">
+        <article class="case-study-card reveal" onclick="showComingSoon('IRCTC Website Redesign')">
           <div class="case-visual visual-irctc">
+            <span class="coming-soon-pill">Coming Soon</span>
             <div class="laptop-frame">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; font-weight:700; letter-spacing:0.04em;">IRCTC RAIL CONNECT</span>
-                <span style="font-size:10px; background:#f59e0b; color:#111; padding:3px 8px; border-radius:6px; font-weight:700;">SIMPLIFIED BOOKING</span>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <span style="font-size:11px; font-weight:700; letter-spacing:0.04em;">IRCTC RAIL CONNECT</span>
+                <span style="font-size:9px; background:#f59e0b; color:#111; padding:3px 8px; border-radius:6px; font-weight:700;">SIMPLIFIED UX</span>
               </div>
-              <div style="background:rgba(255,255,255,0.1); border-radius:10px; padding:14px; display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:center;">
+              <div class="irctc-search-bar" style="background:rgba(255,255,255,0.1); border-radius:10px; padding:14px; display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:center;">
                 <div>
                   <div style="font-size:9px; opacity:0.7;">FROM</div>
-                  <div style="font-size:13px; font-weight:700;">New Delhi (NDLS)</div>
+                  <div style="font-size:12px; font-weight:700;">New Delhi (NDLS)</div>
                 </div>
                 <div>
                   <div style="font-size:9px; opacity:0.7;">TO</div>
-                  <div style="font-size:13px; font-weight:700;">Mumbai Central</div>
+                  <div style="font-size:12px; font-weight:700;">Mumbai Central</div>
                 </div>
-                <div style="background:#3b82f6; padding:8px 12px; border-radius:8px; font-size:11px; font-weight:700;">Search</div>
+                <div class="irctc-search-btn" style="background:#3b82f6; padding:8px 12px; border-radius:8px; font-size:11px; font-weight:700;">Search Trains</div>
               </div>
               <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
                 <div class="mock-pill light"></div>
@@ -651,7 +1071,10 @@
           </div>
           <div class="case-meta">
             <div class="case-category">Website Redesign</div>
-            <h3 class="case-title">IRCTC Website (Coming Soon)</h3>
+            <div class="case-title-row">
+              <h3 class="case-title">IRCTC Website (Coming Soon)</h3>
+              <span class="case-arrow">↗</span>
+            </div>
             <p class="case-desc">
               A comprehensive UX overhaul of India's railway booking portal focused on decluttering dense information architecture, streamlining train search, and simplifying high-pressure Tatkal ticket checkout flows.
             </p>
@@ -659,15 +1082,16 @@
         </article>
 
         <!-- Case Study 2: Zomato Mobile App -->
-        <article class="case-study-card" onclick="showComingSoon('Zomato Mobile App UX Case Study')">
+        <article class="case-study-card reveal" onclick="showComingSoon('Zomato Mobile App UX Case Study')">
           <div class="case-visual visual-zomato">
+            <span class="coming-soon-pill">Coming Soon</span>
             <div class="mockup-phones">
               <div class="phone-frame tilted-left">
                 <div>
                   <div style="font-size:11px; font-weight:800; color:#e23744; margin-bottom:8px;">zomato</div>
-                  <div style="background:#f3f4f6; padding:6px 8px; border-radius:8px; font-size:9px; color:#6b7280; margin-bottom:10px;">Search dishes, restaurants...</div>
+                  <div style="background:#f3f4f6; padding:6px 8px; border-radius:8px; font-size:8.5px; color:#6b7280; margin-bottom:10px;">Search dishes, restaurants...</div>
                   <div class="mock-card-block" style="background:#fef2f2; color:#991b1b; margin-bottom:8px;">
-                    30 Mins Delivery<br><span style="font-weight:400; font-size:9px;">Curated quick bites near you</span>
+                    30 Mins Delivery<br><span style="font-weight:400; font-size:8.5px;">Curated quick bites near you</span>
                   </div>
                 </div>
                 <div style="display:flex; justify-content:space-between; border-top:1px solid #f3f4f6; padding-top:6px; font-size:8px; color:#6b7280;">
@@ -677,16 +1101,16 @@
               <div class="phone-frame tilted-right">
                 <div>
                   <div style="font-size:10px; font-weight:700; color:#111827; margin-bottom:6px;">Group Order Cart</div>
-                  <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:8px; margin-bottom:8px;">
-                    <div style="font-size:9px; font-weight:700;">Paneer Tikka Bowl</div>
-                    <div style="font-size:8px; color:#16a34a;">Added by Puneet • ₹240</div>
+                  <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:7px; margin-bottom:7px;">
+                    <div style="font-size:8.5px; font-weight:700; color:#111827;">Paneer Tikka Bowl</div>
+                    <div style="font-size:7.5px; color:#16a34a;">Added by Puneet • ₹240</div>
                   </div>
-                  <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:8px;">
-                    <div style="font-size:9px; font-weight:700;">Garlic Naan Combo</div>
-                    <div style="font-size:8px; color:#2563eb;">Added by Rahul • ₹180</div>
+                  <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:7px;">
+                    <div style="font-size:8.5px; font-weight:700; color:#111827;">Garlic Naan Combo</div>
+                    <div style="font-size:7.5px; color:#2563eb;">Added by Rahul • ₹180</div>
                   </div>
                 </div>
-                <div style="background:#e23744; color:#fff; text-align:center; padding:7px; border-radius:8px; font-size:9px; font-weight:700;">
+                <div style="background:#e23744; color:#fff; text-align:center; padding:6px; border-radius:8px; font-size:8.5px; font-weight:700;">
                   Place Group Order →
                 </div>
               </div>
@@ -694,7 +1118,10 @@
           </div>
           <div class="case-meta">
             <div class="case-category">Mobile Application</div>
-            <h3 class="case-title">Zomato Mobile App (Coming Soon)</h3>
+            <div class="case-title-row">
+              <h3 class="case-title">Zomato Mobile App (Coming Soon)</h3>
+              <span class="case-arrow">↗</span>
+            </div>
             <p class="case-desc">
               Enhancing food discovery, dietary filtering, and collaborative group ordering flows to reduce decision fatigue and improve checkout speed for everyday mobile diners.
             </p>
@@ -702,23 +1129,24 @@
         </article>
 
         <!-- Case Study 3: Amazon Website -->
-        <article class="case-study-card" onclick="showComingSoon('Amazon Website UX Case Study')">
+        <article class="case-study-card reveal" onclick="showComingSoon('Amazon Website UX Case Study')">
           <div class="case-visual visual-amazon">
+            <span class="coming-soon-pill">Coming Soon</span>
             <div class="laptop-frame">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                 <span style="font-size:13px; font-weight:800; color:#ff9900;">amazon<span style="color:#fff; font-weight:400;">.in</span></span>
-                <span style="font-size:10px; background:rgba(255,255,255,0.12); padding:3px 10px; border-radius:6px;">Smart Product Comparison</span>
+                <span style="font-size:9.5px; background:rgba(255,255,255,0.12); padding:3px 10px; border-radius:6px;">Smart Product Comparison</span>
               </div>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px;">
-                  <div style="font-size:10px; color:#ff9900; font-weight:700;">SPEC MATRIX</div>
-                  <div style="font-size:12px; font-weight:600; margin-top:4px;">Side-by-Side Insights</div>
-                  <div style="font-size:10px; opacity:0.75; margin-top:4px;">Verified review synthesis & key trade-offs at a glance.</div>
+              <div class="laptop-grid-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:10px;">
+                  <div style="font-size:9.5px; color:#ff9900; font-weight:700;">SPEC MATRIX</div>
+                  <div style="font-size:11.5px; font-weight:600; margin-top:3px;">Side-by-Side Insights</div>
+                  <div style="font-size:9.5px; opacity:0.75; margin-top:3px;">Verified review synthesis & key trade-offs at a glance.</div>
                 </div>
-                <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:12px;">
-                  <div style="font-size:10px; color:#34d399; font-weight:700;">CLEAN CHECKOUT</div>
-                  <div style="font-size:12px; font-weight:600; margin-top:4px;">Distraction-Free Cart</div>
-                  <div style="font-size:10px; opacity:0.75; margin-top:4px;">Streamlined delivery & payment hierarchy.</div>
+                <div style="background:rgba(255,255,255,0.08); border-radius:10px; padding:10px;">
+                  <div style="font-size:9.5px; color:#34d399; font-weight:700;">CLEAN CHECKOUT</div>
+                  <div style="font-size:11.5px; font-weight:600; margin-top:3px;">Distraction-Free Cart</div>
+                  <div style="font-size:9.5px; opacity:0.75; margin-top:3px;">Streamlined delivery & payment hierarchy.</div>
                 </div>
               </div>
               <div class="mock-pill light" style="width:45%;"></div>
@@ -726,89 +1154,12 @@
           </div>
           <div class="case-meta">
             <div class="case-category">E-Commerce Website Redesign</div>
-            <h3 class="case-title">Amazon Website (Coming Soon)</h3>
+            <div class="case-title-row">
+              <h3 class="case-title">Amazon Website (Coming Soon)</h3>
+              <span class="case-arrow">↗</span>
+            </div>
             <p class="case-desc">
               Reimagining product comparison pages, verified review filtering, and visual hierarchy on Amazon's desktop experience to help shoppers make confident purchase decisions faster.
-            </p>
-          </div>
-        </article>
-
-        <!-- Featured Project 4: Movie Ticket Booking App (From Resume) -->
-        <article class="case-study-card" onclick="showComingSoon('Movie Ticket Booking App')">
-          <div class="case-visual visual-movie">
-            <div class="mockup-phones">
-              <div class="phone-frame">
-                <div>
-                  <div style="font-size:10px; font-weight:700; color:#111827; margin-bottom:8px;">Select Seats</div>
-                  <div style="height:4px; background:#3d6b7d; border-radius:4px; margin-bottom:12px;"></div>
-                  <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:4px; margin-bottom:10px;">
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#3d6b7d; border-radius:3px;"></span>
-                    <span style="height:12px; background:#3d6b7d; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#9ca3af; border-radius:3px;"></span>
-                    <span style="height:12px; background:#9ca3af; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                    <span style="height:12px; background:#e5e7eb; border-radius:3px;"></span>
-                  </div>
-                </div>
-                <div style="background:#18181b; color:#fff; text-align:center; padding:7px; border-radius:8px; font-size:9px; font-weight:700;">
-                  Confirm 2 Seats • ₹560
-                </div>
-              </div>
-              <div class="phone-frame">
-                <div>
-                  <div style="font-size:10px; font-weight:700; color:#111827; margin-bottom:6px;">Digital Ticket</div>
-                  <div style="background:#f3f4f6; border-radius:10px; padding:10px; text-align:center;">
-                    <div style="font-size:10px; font-weight:800;">IMAX 3D • SCREEN 2</div>
-                    <div style="font-size:8px; color:#6b7280; margin-top:2px;">Row G • Seats 14, 15</div>
-                    <div style="margin-top:10px; height:36px; background:repeating-linear-gradient(90deg,#111,#111 2px,#fff 2px,#fff 5px); border-radius:4px;"></div>
-                  </div>
-                </div>
-                <div style="font-size:8px; text-align:center; color:#6b7280;">Scan at cinema entrance</div>
-              </div>
-            </div>
-          </div>
-          <div class="case-meta">
-            <div class="case-category">Mobile App UI/UX Design • Figma</div>
-            <h3 class="case-title">Movie Ticket Booking App</h3>
-            <p class="case-desc">
-              Designed an end-to-end movie ticket reservation experience featuring interactive seat selection states (available, reserved, selected), date/time scheduling, and a scannable digital ticket pass.
-            </p>
-          </div>
-        </article>
-
-        <!-- Featured Project 5: SpaceTech Website (From Resume) -->
-        <article class="case-study-card" onclick="showComingSoon('SpaceTech Website UI Design')">
-          <div class="case-visual visual-spacetech">
-            <div class="laptop-frame">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; font-weight:800; letter-spacing:0.08em;">SPACETECH</span>
-                <span style="font-size:10px; opacity:0.75;">Missions • Research • Telemetry</span>
-              </div>
-              <div style="margin:auto 0;">
-                <div style="font-size:18px; font-weight:800; letter-spacing:-0.02em; max-width:340px; line-height:1.25;">
-                  Exploring Next-Gen Orbital Systems & Deep Space Tech
-                </div>
-                <div style="margin-top:10px; display:inline-block; background:#6366f1; padding:6px 14px; border-radius:8px; font-size:10px; font-weight:700;">
-                  Explore Missions
-                </div>
-              </div>
-              <div style="display:flex; gap:10px;">
-                <div class="mock-pill light" style="width:30%;"></div>
-                <div class="mock-pill light" style="width:20%;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="case-meta">
-            <div class="case-category">Website UI Design • Figma</div>
-            <h3 class="case-title">SpaceTech — Website UI Design</h3>
-            <p class="case-desc">
-              A modern, structured web experience built with reusable UI components, strict 12-column grid alignment, expressive typography, and clear visual hierarchy for intuitive browsing.
             </p>
           </div>
         </article>
@@ -819,7 +1170,7 @@
     <!-- About Me & Experience Section -->
     <section id="about">
       <div class="about-grid">
-        <div class="about-text">
+        <div class="about-text reveal">
           <h2>About Me</h2>
           <p>
             My journey into UI/UX design is driven by a passion for solving real user problems through clean visual hierarchy, thoughtful interaction design, and scalable design systems. Currently pursuing my B.Tech in Computer Science & Engineering (AI & ML) at Vishveshwarya Group of Institutions (2023–2027), I bridge technical feasibility with human-centered design.
@@ -832,13 +1183,13 @@
           </p>
         </div>
 
-        <div class="about-sidebar">
+        <div class="about-sidebar reveal">
           <!-- Experience Card: AetherAI -->
           <div class="profile-card">
             <h3>Experience</h3>
             <div class="exp-role">UI/UX Designer Intern</div>
             <div class="exp-company">
-              <a href="https://www.aetherai.co" target="_blank" rel="noopener noreferrer" style="text-decoration:underline; text-underline-offset:3px;">
+              <a href="https://www.aetherai.co" target="_blank" rel="noopener noreferrer">
                 Aether AI Pvt. Ltd.
               </a> • Gurugram (Hybrid)
             </div>
@@ -872,7 +1223,7 @@
   </main>
 
   <!-- Let's Connect Footer -->
-  <footer class="connect-wrapper">
+  <footer class="connect-wrapper reveal">
     <div class="connect-card">
       <div class="connect-eyebrow">Like what you see?</div>
       <h2 class="connect-title">Let's Connect!</h2>
@@ -912,7 +1263,6 @@
         const blob = new Blob([byteArray], { type: 'application/pdf' });
         const blobUrl = URL.createObjectURL(blob);
 
-        // Open in new tab and trigger clean download
         const link = document.createElement('a');
         link.href = blobUrl;
         link.download = 'Puneet_Raghav_UI_UX_Resume.pdf';
@@ -931,6 +1281,56 @@
       btn.addEventListener('click', downloadEmbeddedResume);
     });
 
+    // Mobile Navigation Drawer Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const primaryNav = document.getElementById('primaryNav');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = primaryNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        primaryNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Scroll Progress Bar & Sticky Header Shadow
+    const scrollProgress = document.getElementById('scrollProgress');
+    const siteHeader = document.getElementById('siteHeader');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      scrollProgress.style.width = progress + '%';
+
+      if (scrollTop > 16) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Intersection Observer for Smooth Scroll-Reveal Animations
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Toast Notification
     let toastTimer;
     function showToast(message) {
       const toast = document.getElementById('toast');
