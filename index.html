@@ -3,475 +3,908 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Puneet Raghav | UI/UX Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <title>Puneet Raghav — Product Designer</title>
+  <meta name="description" content="Puneet Raghav is a Product Designer creating intuitive, useful, and visually engaging digital products." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #0a0a0d;
-      --card: rgba(255, 255, 255, 0.04);
-      --card-hover: rgba(255, 255, 255, 0.08);
-      --accent: #6366f1;
-      --accent2: #8b5cf6;
-      --text: #f4f4f5;
-      --subtext: #a1a1aa;
-      --font: "Poppins", sans-serif;
-      --gradient: linear-gradient(135deg, var(--accent), var(--accent2));
+      --bg: #F5F3EF;
+      --surface: #FFFFFF;
+      --ink: #131313;
+      --muted: #6E6E6E;
+      --line: #E2DED7;
+      --accent: #275D4F;
+      --accent-soft: #E4EEE9;
+      --radius: 20px;
+      --max: 1200px;
     }
 
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
+    * {
       box-sizing: border-box;
     }
 
-    body {
-      background: radial-gradient(circle at 20% 80%, #11121a 0%, var(--bg) 70%);
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.7;
-      font-family: var(--font);
+    html {
+      scroll-behavior: smooth;
     }
 
-    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-    /* ==================== HEADER ==================== */
-    header {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Navigation */
+    .navbar {
       position: fixed;
       top: 0;
-      width: 100%;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(245, 243, 239, 0.82);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .navbar-inner {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 4rem;
-      backdrop-filter: blur(12px);
-      background: rgba(10, 10, 13, 0.75);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      z-index: 1000;
-      transition: padding .3s ease, background .3s ease;
-    }
-    header.scrolled { padding: .8rem 4rem; background: rgba(10,10,13,.9); }
-
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      min-height: 82px;
     }
 
-    /* Mobile menu toggle */
-    .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; color: var(--text); }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
 
-    nav {
+    .brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
       display: flex;
-      gap: 1.2rem;
+      align-items: center;
+      gap: 34px;
     }
-    nav a {
-      color: var(--subtext);
-      text-decoration: none;
+
+    .nav-links a {
+      position: relative;
+      font-size: 0.92rem;
       font-weight: 500;
-      position: relative;
-      transition: color .3s;
+      color: var(--muted);
+      transition: color 0.25s ease;
     }
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0; height: 2px;
-      bottom: -6px; left: 0;
-      background: var(--gradient);
-      transition: width .3s;
-    }
-    nav a:hover, nav a.active { color: var(--accent); }
-    nav a:hover::after, nav a.active::after { width: 100%; }
 
-    /* ==================== HERO ==================== */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 1.5px;
+      background: var(--ink);
+      transition: width 0.28s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .resume-pill {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 2rem;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 650;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .resume-pill:hover {
+      transform: translateY(-3px);
+      background: var(--accent);
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      padding: 18px 28px 26px;
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+    }
+
+    .mobile-menu a {
+      padding: 10px 0;
+      font-weight: 550;
+      color: var(--muted);
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 175px 0 110px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      align-items: center;
+      gap: 70px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      padding: 9px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    h1 {
+      margin: 0 0 28px;
+      font-size: clamp(3.4rem, 8.5vw, 7rem);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+      font-weight: 850;
+    }
+
+    .hero-copy p {
+      max-width: 660px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2vw, 1.32rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 44px;
+    }
+
+    .btn-dark,
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 30px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 650;
+      transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .btn-dark {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .btn-dark:hover {
+      transform: translateY(-3px);
+      background: var(--accent);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      transform: translateY(-3px);
+      border-color: var(--ink);
+      background: var(--surface);
+    }
+
+    .profile-wrap {
       position: relative;
     }
-    #home::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.15), transparent 70%);
-      z-index: -1;
-      animation: pulse 8s infinite;
-    }
-    @keyframes pulse { 0%,100% {opacity:.4} 50% {opacity:.7} }
 
-    .hero-img {
-      width: 180px; height: 180px;
-      border-radius: 50%;
+    .profile-photo {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 24px;
       object-fit: cover;
-      border: 3px solid transparent;
-      background: var(--gradient);
-      padding: 4px;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 40px rgba(99,102,241,.3);
-      transition: transform .5s;
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 70px rgba(19, 19, 19, 0.12);
+      transition: transform 0.5s ease;
     }
-    .hero-img:hover { transform: scale(1.05) rotate(5deg); }
 
-    #home h2 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: .8rem;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .profile-photo:hover {
+      transform: scale(1.02);
     }
-    #home p { color: var(--subtext); max-width: 680px; font-size: 1.1rem; margin-bottom: 2.5rem; }
 
-    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .btn {
-      padding: .9rem 2rem;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all .4s;
+    .profile-badge {
+      position: absolute;
+      left: -22px;
+      bottom: 34px;
+      padding: 16px 22px;
+      border-radius: 16px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 650;
+      box-shadow: 0 18px 40px rgba(19, 19, 19, 0.18);
+    }
+
+    /* Sections */
+    .section {
+      padding: 105px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-label {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 20px;
+      max-width: 780px;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      line-height: 1.03;
+      letter-spacing: -0.045em;
+      font-weight: 800;
+    }
+
+    .section-intro {
+      max-width: 680px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    /* Case studies */
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      margin-top: 60px;
+    }
+
+    .case-card {
+      position: relative;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .case-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(19, 19, 19, 0.12);
+    }
+
+    .case-image {
       position: relative;
       overflow: hidden;
-      z-index: 1;
+      border-radius: 14px;
+      aspect-ratio: 4 / 3;
+      background: #EAE7E1;
     }
-    .btn-primary { background: var(--gradient); color: #fff; }
-    .btn-secondary { background: transparent; color: var(--text); border: 1.5px solid rgba(255,255,255,.15); }
-    .btn::before {
-      content: '';
-      position: absolute;
-      top:0; left:-100%;
-      width:100%; height:100%;
-      background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-      transition:.6s; z-index:-1;
-    }
-    .btn:hover::before { left:100%; }
-    .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(139,92,246,.3); }
 
-    /* ==================== SECTIONS ==================== */
-    section { padding: 7rem 4rem 4rem; max-width: 1200px; margin: 0 auto; }
-    .section-title {
-      font-size: 2.4rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
+    .case-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
     }
-    .section-title::after {
-      content: '';
-      width: 80px; height: 3px;
-      background: var(--gradient);
-      display: block;
-      margin: 1rem auto 0;
-      border-radius: 2px;
+
+    .case-card:hover .case-image img {
+      transform: scale(1.07);
+    }
+
+    .case-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(19, 19, 19, 0.58), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .case-card:hover .case-overlay {
+      opacity: 1;
+    }
+
+    .case-overlay span {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .case-body {
+      padding: 24px 8px 10px;
+    }
+
+    .case-tag {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .case-title {
+      margin: 0 0 12px;
+      font-size: 1.75rem;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      font-weight: 800;
+    }
+
+    .case-desc {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .coming-soon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 17px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 750;
     }
 
     /* About */
-    #about p { max-width: 800px; margin: 0 auto; text-align: center; color: var(--subtext); font-size: 1.05rem; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .about-copy p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .about-copy strong {
+      color: var(--ink);
+    }
+
+    /* Experience */
+    .experience-list {
+      display: grid;
+      gap: 20px;
+      margin-top: 55px;
+    }
+
+    .experience-card {
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .experience-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 55px rgba(19, 19, 19, 0.08);
+    }
+
+    .experience-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .role {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 750;
+      letter-spacing: -0.025em;
+    }
+
+    .company {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 0.87rem;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .experience-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .experience-card li {
+      margin-bottom: 9px;
+    }
 
     /* Skills */
-    .skill-grid {
+    .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
-      gap: 1.2rem;
-      max-width: 800px;
-      margin: 2rem auto 0;
-    }
-    .skill {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.08);
-      padding: 1.2rem;
-      border-radius: 14px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      transition: all .4s;
-    }
-    .skill:hover {
-      transform: translateY(-8px);
-      border-color: var(--accent);
-      background: var(--card-hover);
-      color: var(--accent);
-      box-shadow: 0 10px 25px rgba(99,102,241,.15);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 55px;
     }
 
-    /* Projects */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-      gap: 2rem;
+    .skill-card {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
-    .project {
-      background: var(--card);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.08);
-      transition: all .4s;
-      position: relative;
-    }
-    .project:hover {
-      transform: translateY(-10px);
+
+    .skill-card:hover {
+      transform: translateY(-5px);
       border-color: var(--accent);
-      box-shadow: 0 20px 40px rgba(99,102,241,.2);
     }
-    .project-img {
-      width: 100%; height: 180px;
-      object-fit: cover;
-      transition: transform .5s;
+
+    .skill-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.05rem;
     }
-    .project:hover .project-img { transform: scale(1.08); }
-    .project-content { padding: 1.5rem; }
-    .project h3 { color: var(--accent); margin-bottom: .6rem; font-size: 1.2rem; }
-    .project p { color: var(--subtext); font-size: .95rem; margin-bottom: 1rem; }
-    .project a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      transition: color .3s;
+
+    .skill-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
     }
-    .project a:hover { color: var(--accent2); }
 
     /* Contact */
-    #contact {
+    .contact {
+      padding: 120px 0 50px;
+      border-top: 1px solid var(--line);
       text-align: center;
-      background: rgba(255,255,255,.03);
-      border-top: 1px solid rgba(255,255,255,.06);
-      padding: 5rem 2rem;
-    }
-    .contact-info { margin: 2rem 0; font-size: 1.1rem; }
-    .contact-info a { color: var(--accent); text-decoration: none; margin: 0 .5rem; }
-    .social-links { margin-top: 1.5rem; }
-    .social-links a {
-      margin: 0 1rem;
-      color: var(--text);
-      font-size: 1.1rem;
-      transition: color .3s;
-    }
-    .social-links a:hover { color: var(--accent); }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--subtext);
-      font-size: .9rem;
-      border-top: 1px solid rgba(255,255,255,.06);
-      background: rgba(10,10,13,.5);
     }
 
-    /* ==================== MOBILE RESPONSIVE ==================== */
-    @media (max-width: 992px) {
-      header { padding: 1rem 2rem; }
-      header.scrolled { padding: .8rem 2rem; }
-      section { padding: 6rem 2rem 3rem; }
-      #home h2 { font-size: 2.6rem; }
+    .contact h2 {
+      margin: 0 0 20px;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 850;
     }
 
-    @media (max-width: 768px) {
-      /* Header - hamburger */
-      .menu-toggle { display: block; }
-      nav {
-        position: fixed;
-        top: 100%; left: 0;
-        width: 100%;
-        background: rgba(10,10,13,.95);
-        backdrop-filter: blur(12px);
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem 0;
-        transform: translateY(-150%);
-        transition: transform .4s ease;
+    .contact p {
+      max-width: 540px;
+      margin: 0 auto 38px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .footer {
+      padding: 36px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    /* Scroll animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
       }
-      nav.open { transform: translateY(0); }
-      nav a { margin: .6rem 0; font-size: 1.1rem; }
 
-      #home h2 { font-size: 2.2rem; }
-      #home p { font-size: 1rem; }
+      .case-grid,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
 
-      .btn-group { flex-direction: column; align-items: center; }
-      .btn { width: 80%; max-width: 300px; text-align: center; }
+      .nav-links {
+        display: none;
+      }
 
-      .skill-grid { grid-template-columns: repeat(2, 1fr); }
-      .project-grid { grid-template-columns: 1fr; }
+      .menu-btn {
+        display: block;
+      }
+
+      .hero {
+        padding: 145px 0 80px;
+      }
+
+      .profile-badge {
+        left: 12px;
+      }
     }
 
-    @media (max-width: 480px) {
-      header { padding: .8rem 1.5rem; }
-      header h1 { font-size: 1.3rem; }
+    @media (max-width: 560px) {
+      .container {
+        padding: 0 20px;
+      }
 
-      #home { padding: 0 1rem; }
-      .hero-img { width: 140px; height: 140px; }
+      .section {
+        padding: 75px 0;
+      }
 
-      #home h2 { font-size: 1.9rem; }
-      #home p { font-size: .95rem; }
-
-      .section-title { font-size: 2rem; }
-      .section-title::after { width: 60px; }
-
-      .skill-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .skill { padding: 1rem; }
-
-      .project-img { height: 160px; }
-      .project-content { padding: 1.2rem; }
-      .project h3 { font-size: 1.1rem; }
-      .project p { font-size: .9rem; }
-
-      .contact-info { font-size: 1rem; }
-      .social-links a { margin: 0 .6rem; font-size: 1rem; }
+      .experience-card,
+      .skill-card {
+        padding: 25px;
+      }
     }
   </style>
 </head>
-<body>
 
-  <header>
-    <h1>Puneet Raghav</h1>
-    <div class="menu-toggle" id="menuToggle">
-      <i class="fas fa-bars"></i>
+<body>
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="#top" class="brand">Puneet<span>.</span></a>
+
+      <nav class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="resume-pill" href="resume.pdf" download>
+        Resume <span aria-hidden="true">↓</span>
+      </a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
     </div>
-    <nav id="navMenu">
-      <a href="#home" class="active">Home</a>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#work">Work</a>
       <a href="#about">About</a>
+      <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
-    </nav>
+    </div>
   </header>
 
-  <!-- Hero -->
-  <section id="home">
-    <img src="my.jpg" alt="Puneet Raghav" class="hero-img">
-    <h2>Hello, I’m <span>Puneet Raghav</span></h2>
-    <p>UI/UX Designer crafting digital experiences where elegance meets purpose. I create designs that tell stories and build emotion through simplicity and clarity.</p>
-    <div class="btn-group">
-      <a href="mailto:thakurpuneetraghav16082004@gmail.com" class="btn btn-primary">Hire Me</a>
-      <a href="https://wa.me/917417435339" target="_blank" class="btn btn-secondary">WhatsApp</a>
-      <a href="resume.pdf" download class="btn btn-secondary">Download CV</a>
-    </div>
-  </section>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Product Designer</div>
 
-  <!-- About -->
-  <section id="about">
-    <h2 class="section-title">About Me</h2>
-    <p>Hi, I’m Puneet Raghav, a passionate UI/UX Designer and Computer Science student specializing in AI & Machine Learning. I love creating digital experiences that are not only visually appealing but also meaningful and user-centered. <br><br>
+          <h1>Hi,<br />I’m Puneet!</h1>
 
-My journey began with a deep curiosity for how people interact with technology — and that curiosity drives me to design interfaces that solve real problems with clarity and creativity. I focus on research-driven design, clean aesthetics, and smooth user flows, using tools like Figma, Adobe XD, and Canva to bring ideas to life. <br><br>
+          <p>
+            I design useful, intuitive, and visually engaging digital products—turning user
+            needs into clear experiences across mobile apps and websites.
+          </p>
 
-Beyond design, I’m also exploring the intersection of design, technology, and innovation — building projects that merge AI and UX to shape smarter, more intuitive experiences. <br><br>
+          <div class="hero-actions">
+            <a class="btn-dark" href="#work">View work</a>
+            <a class="btn-outline" href="https://www.linkedin.com/in/puneet-raghav" target="_blank" rel="noopener">
+              LinkedIn
+            </a>
+          </div>
+        </div>
 
-I’m constantly learning, experimenting, and pushing boundaries to grow as a designer who not only builds interfaces but also crafts impactful digital stories.</p>
-  </section>
+        <div class="profile-wrap reveal">
+          <img
+            class="profile-photo"
+            src="images/puneet.jpg"
+            alt="Portrait of Puneet Raghav"
+          />
 
-  <!-- Skills -->
-  <section id="skills">
-    <h2 class="section-title">Skills</h2>
-    <div class="skill-grid">
-      <div class="skill">Figma</div>
-      <div class="skill">Adobe XD</div>
-      <div class="skill">Wireframing</div>
-      <div class="skill">Prototyping</div>
-      <div class="skill">User Research</div>
-      <div class="skill">UI Animation</div>
-      <div class="skill">Responsive Design</div>
-      <div class="skill">HTML/CSS</div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects">
-    <h2 class="section-title">Featured Projects</h2>
-    <div class="project-grid">
-      <div class="project">
-        <img src="mtba.png" alt="Movie Ticket Booking App" class="project-img">
-        <div class="project-content">
-          <h3>Movie Ticket Booking App</h3>
-          <p>A clean, futuristic booking app designed to deliver a seamless user experience with clarity and flow.</p>
-          <a href="https://www.figma.com/design/6PVX8vGJTkporzVRP5pLEn/Movie-Ticket-Booking-App" target="_blank">
-            View on Figma <i class="fas fa-external-link-alt"></i>
-          </a>
+          <div class="profile-badge">
+            Product Designer<br />Based in India
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="project">
-        <img src="spacetech.png" alt="SpaceTech UI Design" class="project-img">
-        <div class="project-content">
-          <h3>SpaceTech Website</h3>
-          <p>Elegant web layout built for a fictional tech brand — merging science, simplicity, and storytelling.</p>
-          <a href="https://www.figma.com/design/NLgVkNsO8fE40IxjhnAHoM/SpaceTech-Website-Design" target="_blank">
-            View on Figma <i class="fas fa-external-link-alt"></i>
-          </a>
+    <section class="section" id="work">
+      <div class="container">
+        <div class="reveal">
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-title">Product design case studies</h2>
+          <p class="section-intro">
+            Explorations in product thinking, user flows, interface systems, and end-to-end
+            experience design.
+          </p>
+        </div>
+
+        <div class="case-grid">
+          <article class="case-card reveal">
+            <div class="case-image">
+              <img src="images/irctc.jpg" alt="IRCTC website redesign case study" />
+              <div class="case-overlay"><span>Coming Soon</span></div>
+            </div>
+
+            <div class="case-body">
+              <p class="case-tag">Website Redesign</p>
+              <h3 class="case-title">IRCTC</h3>
+              <p class="case-desc">
+                A conceptual redesign exploring clearer ticket-booking flows, better information
+                hierarchy, and a more accessible railway experience.
+              </p>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+          </article>
+
+          <article class="case-card reveal">
+            <div class="case-image">
+              <img src="images/zomato.jpg" alt="Zomato mobile app case study" />
+              <div class="case-overlay"><span>Coming Soon</span></div>
+            </div>
+
+            <div class="case-body">
+              <p class="case-tag">Mobile App</p>
+              <h3 class="case-title">Zomato</h3>
+              <p class="case-desc">
+                A product design exploration of food discovery, restaurant browsing, ordering
+                clarity, and a more seamless customer journey.
+              </p>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+          </article>
+
+          <article class="case-card reveal">
+            <div class="case-image">
+              <img src="images/amazon.jpg" alt="Amazon website case study" />
+              <div class="case-overlay"><span>Coming Soon</span></div>
+            </div>
+
+            <div class="case-body">
+              <p class="case-tag">E-commerce Website</p>
+              <h3 class="case-title">Amazon</h3>
+              <p class="case-desc">
+                A website product-design exploration focused on search, product discovery,
+                comparison flows, and a more intuitive shopping experience.
+              </p>
+              <span class="coming-soon">Coming Soon</span>
+            </div>
+          </article>
         </div>
       </div>
+    </section>
 
-      <div class="project">
-        <img src="Flixs.png" alt="Flixs UI Design" class="project-img">
-        <div class="project-content">
-          <h3>Flixs Community Platform</h3>
-          <p>Designed an interactive and visually engaging community platform focused on collaboration and connection.</p>
-          <a href="https://www.figma.com/design/TDCdy1HMqV8aOo6FCxaFVL/Flixs" target="_blank">
-            View on Figma <i class="fas fa-external-link-alt"></i>
-          </a>
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="reveal">
+          <p class="section-label">About Me</p>
+          <h2 class="section-title">
+            Designing products<br />people understand.
+          </h2>
+        </div>
+
+        <div class="about-copy reveal">
+          <p>
+            I’m <strong>Puneet Raghav</strong>, a Product Designer focused on creating useful,
+            intuitive, and visually engaging digital experiences. I approach design as a balance
+            of user needs, business goals, visual clarity, and practical implementation.
+          </p>
+
+          <p>
+            I work with <strong>Figma, FigJam, Adobe XD, wireframing, interactive prototyping,
+            responsive design, user research, and UI animation</strong>. My experience includes
+            designing mobile applications, websites, and digital platforms with a focus on
+            usability, visual hierarchy, and consistent design systems.
+          </p>
+
+          <p>
+            I’m especially interested in transforming complex problems into simple product
+            experiences that help people accomplish their goals with confidence.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2 class="section-title">Get in Touch</h2>
-    <div class="contact-info">
-      <span>📧</span> <a href="mailto:thakurpuneetraghav16082004@gmail.com">thakurpuneetraghav16082004@gmail.com</a><br><br>
-      <span>📞</span> <a href="tel:+917417435339">+91 74174 35339</a>
-    </div>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/puneetraghav" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-      <a href="https://www.instagram.com/puneetraghav.ai" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://github.com/puneet04-hub" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-    </div>
-  </section>
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="reveal">
+          <p class="section-label">Experience</p>
+          <h2 class="section-title">Where I’ve worked</h2>
+        </div>
 
-  <footer>
-    © 2025 Puneet Raghav · Designed with <i class="fas fa-heart" style="color:#e11d48;"></i> in Figma & Code
+        <div class="experience-list">
+          <article class="experience-card reveal">
+            <div class="experience-top">
+              <div>
+                <h3 class="role">Product Design Intern</h3>
+                <p class="company">Aether AI Pvt. Ltd. · Gurugram · Hybrid</p>
+              </div>
+              <span class="date">Oct 2025 – Dec 2025</span>
+            </div>
+
+            <ul>
+              <li>Designed user-friendly and visually consistent mobile application interfaces with clean layouts, intuitive navigation, and modern UI patterns.</li>
+              <li>Conducted basic user research to understand user needs and translate them into product flows.</li>
+              <li>Created interactive prototypes to demonstrate user journeys, application flows, and interface interactions.</li>
+              <li>Collaborated with the development team to support accurate implementation of product designs.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="reveal">
+          <p class="section-label">Capabilities</p>
+          <h2 class="section-title">Skills & tools</h2>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card reveal">
+            <h3>Design Tools</h3>
+            <p>Figma, FigJam, Adobe XD</p>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3>Product & UI Design</h3>
+            <p>Visual design, typography, color theory, grids, layout, spacing, design systems, responsive design, and auto layout.</p>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3>UX & Research</h3>
+            <p>User research, personas, journey mapping, user flows, information architecture, wireframing, prototyping, usability testing, and interaction design.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container reveal">
+        <p class="section-label">Like what you see?</p>
+        <h2>Let’s Connect!</h2>
+        <p>
+          I’m open to Product Design opportunities, collaborations, and conversations about
+          building thoughtful digital products.
+        </p>
+
+        <div class="contact-links">
+          <a class="btn-dark" href="mailto:puneet.raghav06@gmail.com">Email Me</a>
+          <a class="btn-outline" href="https://www.linkedin.com/in/puneet-raghav" target="_blank" rel="noopener">
+            LinkedIn
+          </a>
+          <a class="btn-outline" href="resume.pdf" download>Download Resume</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© 2026 Puneet Raghav</span>
+      <span>Product Designer · India</span>
+    </div>
   </footer>
 
   <script>
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    menuToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      const icon = menuToggle.querySelector('i');
-      icon.classList.toggle('fa-bars');
-      icon.classList.toggle('fa-times');
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("open");
     });
 
-    // Active Nav Link on scroll
-    const navLinks = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('section');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        const top = sec.offsetTop - 120;
-        if (scrollY >= top) current = sec.getAttribute('id');
-      });
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href').slice(1) === current);
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
       });
     });
 
-    // Header shrink
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -60px 0px",
+      }
+    );
+
+    revealElements.forEach((element) => observer.observe(element));
   </script>
 </body>
 </html>
